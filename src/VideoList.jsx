@@ -61,5 +61,5 @@ function DateTime(props) {
   }
   
   export default  function VideoList(props) {
-    return props.list.map(item => <Video url={item.url} date={item.date} />);
+    return props.list.map((item, i) => <Video key={i} url={item.url} date={item.date} />);
   }

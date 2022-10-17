@@ -1,68 +1,22 @@
 import React from 'react';
+import Article from './article';
+import Video from './video';
+import GetPretty from './pretty';
 
-function New(props) {
-  return (
-    <div className="wrap-item wrap-item-new">
-      <span className="label">New!</span>
-      {props.children}
-    </div>
-  )
-};
-
-function Popular(props) {
-  return (
-    <div className="wrap-item wrap-item-popular">
-      <span className="label">Popular!</span>
-      {props.children}
-    </div>
-  )
-};
-
-function Article(props) {
-  return (
-    <div className="item item-article">
-      <h3><a href="#">{props.title}</a></h3>
-      <p className="views">Прочтений: {props.views}</p>
-    </div>
-  )
-};
-
-function Video(props) {
-  return (
-    <div className="item item-video">
-      <iframe src={props.url} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      <p className="views">Просмотров: {props.views}</p>
-    </div>
-  )
-};
-
-function getPretty(Component) {
-  return class extends React.Component {
-    render() {
-      if (this.props.views > 1000) {
-        return <Popular><Component {...this.props} /></Popular>;
-      } else {
-        return <New><Component {...this.props} /></New>;
-      }
-      
-    }
-  }
-}
-
-const NewComponentVideo = getPretty(Video);
-const NewComponentArticle = getPretty(Article);
+const NewComponentVideo = GetPretty(Video);
+const NewComponentArticle = GetPretty(Article);
 
 function List(props) {
-  return props.list.map(item => {
+  return props.list.map((item, i) => {
     switch (item.type) {
       case 'video':
         return (
-          <NewComponentVideo {...item} />
+          <NewComponentVideo key={i} {...item} />
         );
 
       case 'article':
         return (
-          <NewComponentArticle {...item} />
+          <NewComponentArticle key={i} {...item} />
         );
     }
   });
